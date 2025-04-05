@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>物理模拟实验室 - 高保真原型</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Noto Sans SC (思源黑体) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .prototype-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .prototype-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .prototype-label {
+            margin-top: 10px;
+            font-weight: 500;
+            text-align: center;
+        }
+        .phone-container {
+            width: 405px;
+            height: 852px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        .phone-frame {
+            margin: 0;
+        }
+        iframe {
+            border: none;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <header class="bg-white shadow-md p-6 mb-8">
+        <h1 class="text-3xl font-bold text-center text-gray-800">物理模拟实验室小程序</h1>
+        <p class="text-center text-gray-600 mt-2">高保真原型展示</p>
+    </header>
+    
+    <div class="prototype-container">
+        <!-- 启动页 -->
+        <div class="prototype-item">
+            <div class="phone-container" >
+                <iframe src="startup.html" title="启动页"></iframe>
+            </div>
+            <div class="prototype-label">启动页</div>
+        </div>
+        
+        <!-- 首页/实验库 -->
+        <div class="prototype-item">
+            <div class="phone-container">
+                <iframe src="home.html" title="首页/实验库"></iframe>
+            </div>
+            <div class="prototype-label">首页/实验库</div>
+        </div>
+        
+        <!-- 实验详情页 -->
+        <div class="prototype-item">
+            <div class="phone-container">
+                <iframe src="experiment-detail.html" title="实验详情页"></iframe>
+            </div>
+            <div class="prototype-label">实验详情页</div>
+        </div>
+        
+        <!-- 实验操作界面 -->
+        <div class="prototype-item">
+            <div class="phone-container">
+                <iframe src="experiment-simulation.html" title="3D实验操作界面"></iframe>
+            </div>
+            <div class="prototype-label">3D实验操作界面</div>
+        </div>
+        
+        <!-- 实验数据分析页面 -->
+        <div class="prototype-item">
+            <div class="phone-container">
+                <iframe src="experiment-data.html" title="实验数据分析"></iframe>
+            </div>
+            <div class="prototype-label">实验数据分析</div>
+        </div>
+        
+        <!-- AI辅助学习对话界面 -->
+        <div class="prototype-item">
+            <div class="phone-container">
+                <iframe src="ai-assistant.html" title="AI助手"></iframe>
+            </div>
+            <div class="prototype-label">AI辅助学习对话界面</div>
+        </div>
+        
+        <!-- 游戏化成就系统 -->
+        <div class="prototype-item">
+            <div class="phone-container">
+                <iframe src="achievements.html" title="成就系统"></iframe>
+            </div>
+            <div class="prototype-label">游戏化成就系统</div>
+        </div>
+        
+        <!-- 我的页面 -->
+        <div class="prototype-item">
+            <div class="phone-container">
+                <iframe src="profile.html" title="我的页面"></iframe>
+            </div>
+            <div class="prototype-label">我的页面</div>
+        </div>
+    </div>
+    
+    <footer class="bg-white p-6 mt-8 shadow-md">
+        <div class="text-center text-gray-600">
+            <p>物理模拟实验室小程序 · 高保真原型设计</p>
+            <p class="mt-2 text-sm">基于 HTML, CSS 和 JavaScript 实现</p>
+        </div>
+    </footer>
+    
+    <script src="js/main.js"></script>
+</body>
+</html> 

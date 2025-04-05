@@ -1,0 +1,251 @@
+/* 主题颜色变量 */
+:root {
+    --primary-color: #4A90E2; /* 天空蓝 */
+    --secondary-color: #7ED321; /* 浅绿色 */
+    --accent-color: #F8E71C; /* 黄色 */
+    --bg-color: #F5F5F5; /* 浅灰色 */
+    --text-color: #333333; /* 深灰色 */
+    --white: #FFFFFF;
+    --light-gray: #E5E5E5;
+    --mid-gray: #999999;
+    --dark-gray: #666666;
+}
+
+/* 全局样式 */
+body {
+    font-family: 'Noto Sans SC', sans-serif;
+    color: var(--text-color);
+}
+
+/* iPhone 15 Pro 框架样式 */
+.phone-frame {
+    width: 375px;
+    height: 812px;
+    background-color: var(--white);
+    border-radius: 40px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    margin: 20px;
+}
+
+/* 刘海屏模拟 */
+.notch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 30px;
+    background-color: #000;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    z-index: 100;
+}
+
+/* 手机屏幕内容容器 */
+.screen-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding-top: 30px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-color);
+}
+
+/* 标题栏样式 */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    background-color: var(--white);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+/* 底部导航栏样式 */
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--white);
+    padding: 12px 0;
+    box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1);
+    margin-top: auto;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 10px;
+    color: var(--mid-gray);
+    flex: 1;
+    padding: 8px 0;
+}
+
+.nav-item.active {
+    color: var(--primary-color);
+}
+
+.nav-item i {
+    font-size: 22px;
+    margin-bottom: 4px;
+}
+
+/* 按钮样式 */
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-weight: 500;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(74, 144, 226, 0.3);
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(74, 144, 226, 0.4);
+}
+
+.btn-secondary {
+    background-color: var(--white);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* 卡片样式 */
+.card {
+    background-color: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+/* 实验卡片 */
+.experiment-card {
+    width: 150px;
+    height: 180px;
+    margin: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.experiment-image {
+    height: 120px;
+    background-size: cover;
+    background-position: center;
+}
+
+.experiment-title {
+    padding: 12px;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+/* 标签样式 */
+.tag {
+    background-color: rgba(74, 144, 226, 0.1);
+    color: var(--primary-color);
+    border-radius: 16px;
+    padding: 4px 12px;
+    font-size: 12px;
+    margin-right: 8px;
+    display: inline-block;
+}
+
+/* 滑块样式 */
+.slider-container {
+    padding: 10px 0;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 4px;
+    background: var(--light-gray);
+    border-radius: 4px;
+    outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* 搜索栏样式 */
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: var(--light-gray);
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin: 10px 16px;
+}
+
+.search-bar i {
+    color: var(--mid-gray);
+    margin-right: 8px;
+}
+
+.search-input {
+    border: none;
+    background: transparent;
+    flex-grow: 1;
+    font-size: 14px;
+    outline: none;
+}
+
+/* 3D场景容器 */
+.scene-container {
+    width: 100%;
+    flex-grow: 1;
+    background-color: #f0f8ff;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 数据图表样式 */
+.chart-container {
+    width: 100%;
+    height: 180px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+/* 对话气泡样式 */
+.chat-bubble {
+    padding: 12px 16px;
+    border-radius: 18px;
+    max-width: 80%;
+    margin-bottom: 10px;
+}
+
+.chat-bubble.user {
+    background-color: var(--primary-color);
+    color: white;
+    margin-left: auto;
+    border-bottom-right-radius: 4px;
+}
+
+.chat-bubble.ai {
+    background-color: var(--light-gray);
+    border-bottom-left-radius: 4px;
+} 

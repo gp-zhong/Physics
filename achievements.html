@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成就系统 - 物理模拟实验室</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Noto Sans SC (思源黑体) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+    
+    <!-- iPhone 15 Pro 框架 -->
+    <div class="phone-frame">
+        <!-- 刘海屏 -->
+        <div class="notch"></div>
+        
+        <!-- 屏幕内容 -->
+        <div class="screen-content">
+            <!-- 顶部导航 -->
+            <div class="header">
+                <a href="home.html" class="text-gray-700">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h1 class="text-lg font-medium flex-1 text-center">成就系统</h1>
+                <button class="text-gray-700">
+                    <i class="fas fa-share-alt"></i>
+                </button>
+            </div>
+            
+            <!-- 主要内容区域 - 可滚动 -->
+            <div class="overflow-y-auto flex-1 pb-16">
+                <!-- 用户等级和经验值 -->
+                <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-16 h-16 bg-white rounded-full overflow-hidden mr-4 border-2 border-white shadow-lg">
+                            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=100" alt="用户头像" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold">物理学徒</h2>
+                            <p class="text-blue-100">等级 2</p>
+                        </div>
+                    </div>
+                    <div class="mb-1 flex justify-between text-xs">
+                        <span>210 经验值</span>
+                        <span>700 经验值</span>
+                    </div>
+                    <div class="w-full h-2 bg-blue-300 rounded-full overflow-hidden">
+                        <div class="h-full bg-yellow-400 rounded-full" style="width: 30%"></div>
+                    </div>
+                    <div class="mt-1 text-center text-xs text-blue-100">
+                        距离下一等级：490 经验值
+                    </div>
+                </div>
+                
+                <!-- 成就数据统计 -->
+                <div class="bg-white p-4 flex justify-between">
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-blue-500">3</div>
+                        <div class="text-xs text-gray-500">已获得勋章</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-blue-500">5</div>
+                        <div class="text-xs text-gray-500">完成实验</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-blue-500">3</div>
+                        <div class="text-xs text-gray-500">连续天数</div>
+                    </div>
+                </div>
+                
+                <!-- 选项卡导航 -->
+                <div class="bg-white mt-2 px-4 flex border-b">
+                    <button class="py-3 px-4 border-b-2 border-blue-500 text-blue-500 font-medium">勋章</button>
+                    <button class="py-3 px-4 text-gray-500">挑战</button>
+                    <button class="py-3 px-4 text-gray-500">排行榜</button>
+                </div>
+                
+                <!-- 已获得勋章 -->
+                <div class="p-4">
+                    <h3 class="text-lg font-medium mb-3">已获得勋章</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- 初探物理勋章 -->
+                        <div class="card p-4 flex flex-col items-center text-center">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-2">
+                                <i class="fas fa-atom text-blue-500 text-2xl"></i>
+                            </div>
+                            <h4 class="font-medium mb-1">初探物理</h4>
+                            <p class="text-xs text-gray-500">完成第一个实验</p>
+                            <div class="mt-2 bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full">
+                                已获得
+                            </div>
+                        </div>
+                        
+                        <!-- 精确测量勋章 -->
+                        <div class="card p-4 flex flex-col items-center text-center">
+                            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-2">
+                                <i class="fas fa-ruler text-green-500 text-2xl"></i>
+                            </div>
+                            <h4 class="font-medium mb-1">精确测量</h4>
+                            <p class="text-xs text-gray-500">收集100个数据点</p>
+                            <div class="mt-2 bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full">
+                                已获得
+                            </div>
+                        </div>
+                        
+                        <!-- 探索达人勋章 -->
+                        <div class="card p-4 flex flex-col items-center text-center">
+                            <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-2">
+                                <i class="fas fa-compass text-yellow-500 text-2xl"></i>
+                            </div>
+                            <h4 class="font-medium mb-1">探索达人</h4>
+                            <p class="text-xs text-gray-500">浏览所有实验类别</p>
+                            <div class="mt-2 bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full">
+                                已获得
+                            </div>
+                        </div>
+                        
+                        <!-- 锁定的勋章 -->
+                        <div class="card p-4 flex flex-col items-center text-center bg-gray-50">
+                            <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-2">
+                                <i class="fas fa-lock text-gray-400 text-2xl"></i>
+                            </div>
+                            <h4 class="font-medium mb-1 text-gray-400">力学大师</h4>
+                            <p class="text-xs text-gray-400">完成所有力学实验</p>
+                            <div class="mt-2 bg-gray-200 text-gray-500 text-xs px-2 py-1 rounded-full">
+                                进度: 3/5
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 挑战任务 -->
+                <div class="p-4">
+                    <h3 class="text-lg font-medium mb-3">挑战任务</h3>
+                    <div class="card divide-y">
+                        <!-- 已完成的任务 -->
+                        <div class="flex items-center p-4">
+                            <div class="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center mr-3 flex-shrink-0">
+                                <i class="fas fa-check text-white text-xs"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium">完成首个实验</h4>
+                                <p class="text-xs text-gray-500">奖励: 50 经验值</p>
+                            </div>
+                            <div class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full">
+                                已完成
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center p-4">
+                            <div class="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center mr-3 flex-shrink-0">
+                                <i class="fas fa-check text-white text-xs"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium">连续实验3天</h4>
+                                <p class="text-xs text-gray-500">奖励: 100 经验值</p>
+                            </div>
+                            <div class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full">
+                                已完成
+                            </div>
+                        </div>
+                        
+                        <!-- 进行中的任务 -->
+                        <div class="flex items-center p-4">
+                            <div class="w-6 h-6 rounded-full border-2 border-blue-500 text-blue-500 flex items-center justify-center mr-3 flex-shrink-0">
+                                <span class="text-xs">30%</span>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium">在一次实验中收集50个数据点</h4>
+                                <div class="mt-1 w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                    <div class="h-full bg-blue-500 rounded-full" style="width: 30%"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">奖励: 150 经验值</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center p-4">
+                            <div class="w-6 h-6 rounded-full border-2 border-blue-500 text-blue-500 flex items-center justify-center mr-3 flex-shrink-0">
+                                <span class="text-xs">60%</span>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium">完成所有力学实验</h4>
+                                <div class="mt-1 w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                    <div class="h-full bg-blue-500 rounded-full" style="width: 60%"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">奖励: 200 经验值 + 力学大师勋章</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 本周排行榜 -->
+                <div class="p-4">
+                    <h3 class="text-lg font-medium mb-3">本周排行榜</h3>
+                    <div class="card">
+                        <!-- 排行榜第一 -->
+                        <div class="flex items-center p-4 bg-yellow-50">
+                            <div class="w-8 h-8 rounded-full bg-yellow-500 text-white font-bold flex items-center justify-center mr-3">
+                                1
+                            </div>
+                            <div class="w-8 h-8 bg-gray-200 rounded-full overflow-hidden mr-3">
+                                <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=100" alt="用户头像" class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium">张三</h4>
+                                <p class="text-xs text-gray-500">物理探索者 · 等级4</p>
+                            </div>
+                            <div class="font-bold text-yellow-500">
+                                320分
+                            </div>
+                        </div>
+                        
+                        <!-- 排行榜第二 -->
+                        <div class="flex items-center p-4 bg-gray-50">
+                            <div class="w-8 h-8 rounded-full bg-gray-400 text-white font-bold flex items-center justify-center mr-3">
+                                2
+                            </div>
+                            <div class="w-8 h-8 bg-gray-200 rounded-full overflow-hidden mr-3">
+                                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=100" alt="用户头像" class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium">李四</h4>
+                                <p class="text-xs text-gray-500">物理爱好者 · 等级3</p>
+                            </div>
+                            <div class="font-medium text-gray-600">
+                                280分
+                            </div>
+                        </div>
+                        
+                        <!-- 当前用户 -->
+                        <div class="flex items-center p-4 bg-blue-50">
+                            <div class="w-8 h-8 rounded-full bg-blue-500 text-white font-bold flex items-center justify-center mr-3">
+                                3
+                            </div>
+                            <div class="w-8 h-8 bg-gray-200 rounded-full overflow-hidden mr-3">
+                                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=100" alt="用户头像" class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium">你</h4>
+                                <p class="text-xs text-gray-500">物理学徒 · 等级2</p>
+                            </div>
+                            <div class="font-medium text-blue-500">
+                                210分
+                            </div>
+                        </div>
+                        
+                        <!-- 排行榜第四 -->
+                        <div class="flex items-center p-4">
+                            <div class="w-8 h-8 rounded-full bg-gray-300 text-white font-bold flex items-center justify-center mr-3">
+                                4
+                            </div>
+                            <div class="w-8 h-8 bg-gray-200 rounded-full overflow-hidden mr-3">
+                                <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?q=80&w=100" alt="用户头像" class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium">王五</h4>
+                                <p class="text-xs text-gray-500">物理初学者 · 等级2</p>
+                            </div>
+                            <div class="font-medium text-gray-500">
+                                180分
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 底部导航栏 -->
+            <div class="bottom-nav">
+                <a href="home.html" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                </a>
+                <div class="nav-item">
+                    <i class="fas fa-compass"></i>
+                    <span>探索</span>
+                </div>
+                <a href="profile.html" class="nav-item">
+                    <i class="fas fa-user"></i>
+                    <span>我的</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/main.js"></script>
+</body>
+</html> 

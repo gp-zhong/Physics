@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实验模拟 - 自由落体</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Noto Sans SC (思源黑体) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* 小球动画 */
+        @keyframes fall {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(calc(100% - 20px)); }
+        }
+        .ball {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #4A90E2;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            margin-left: -10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .ball.running {
+            animation: fall 2s cubic-bezier(0.5, 0, 1, 1) forwards;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+    
+    <!-- iPhone 15 Pro 框架 -->
+    <div class="phone-frame">
+        <!-- 刘海屏 -->
+        <div class="notch"></div>
+        
+        <!-- 屏幕内容 -->
+        <div class="screen-content">
+            <!-- 顶部导航 -->
+            <div class="header bg-white">
+                <a href="experiment-detail.html" class="text-gray-700">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h1 class="text-lg font-medium flex-1 text-center">自由落体</h1>
+                <div class="flex">
+                    <button class="text-gray-700 mr-4" id="pauseBtn">
+                        <i class="fas fa-pause"></i>
+                    </button>
+                    <button class="text-gray-700" id="resetBtn">
+                        <i class="fas fa-redo-alt"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 实验场景 -->
+            <div class="scene-container relative">
+                <!-- 测量刻度 -->
+                <div class="absolute left-4 top-4 bottom-4 w-4 bg-white/70 rounded-full flex flex-col justify-between items-center text-xs text-gray-700">
+                    <div>0m</div>
+                    <div class="h-1 w-2 bg-gray-400"></div>
+                    <div>5m</div>
+                    <div class="h-1 w-2 bg-gray-400"></div>
+                    <div>10m</div>
+                </div>
+                
+                <!-- 实验引导提示 (可根据教学模式显示/隐藏) -->
+                <div class="absolute top-4 right-4 bg-white/80 rounded-lg p-3 shadow-sm text-xs text-gray-700 w-40">
+                    <div class="font-medium mb-1">提示:</div>
+                    调整参数后点击"开始下落"按钮观察小球运动情况
+                </div>
+                
+                <!-- 模拟小球 -->
+                <div class="ball" id="experimentBall"></div>
+                
+                <!-- 地面 -->
+                <div class="absolute bottom-0 left-0 right-0 h-2 bg-gray-300"></div>
+                
+                <!-- 背景装饰 - 云彩 -->
+                <div class="absolute top-10 right-10 text-white/30 text-4xl">
+                    <i class="fas fa-cloud"></i>
+                </div>
+                <div class="absolute top-20 left-20 text-white/20 text-3xl">
+                    <i class="fas fa-cloud"></i>
+                </div>
+            </div>
+            
+            <!-- 参数控制面板 -->
+            <div class="bg-white p-4">
+                <h2 class="text-lg font-medium mb-3">参数调整</h2>
+                
+                <!-- 高度调整 -->
+                <div class="mb-3">
+                    <div class="flex justify-between items-center mb-1">
+                        <label class="text-gray-600 text-sm">高度(m):</label>
+                        <span class="font-medium" id="heightValue">10.0</span>
+                    </div>
+                    <div class="slider-container">
+                        <input type="range" min="1" max="20" value="10" step="0.1" class="slider" id="heightSlider" data-value-id="heightValue">
+                    </div>
+                </div>
+                
+                <!-- 重力加速度调整 -->
+                <div class="mb-3">
+                    <div class="flex justify-between items-center mb-1">
+                        <label class="text-gray-600 text-sm">重力加速度(m/s²):</label>
+                        <span class="font-medium" id="gravityValue">9.8</span>
+                    </div>
+                    <div class="slider-container">
+                        <input type="range" min="1" max="15" value="9.8" step="0.1" class="slider" id="gravitySlider" data-value-id="gravityValue">
+                    </div>
+                </div>
+                
+                <!-- 物体质量调整 -->
+                <div class="mb-4">
+                    <div class="flex justify-between items-center mb-1">
+                        <label class="text-gray-600 text-sm">物体质量(kg):</label>
+                        <span class="font-medium" id="massValue">1.0</span>
+                    </div>
+                    <div class="slider-container">
+                        <input type="range" min="0.1" max="5" value="1" step="0.1" class="slider" id="massSlider" data-value-id="massValue">
+                    </div>
+                </div>
+                
+                <!-- 数据显示 -->
+                <div class="flex justify-between items-center text-sm mb-4">
+                    <div class="bg-gray-100 rounded-lg p-2 flex-1 mx-1 text-center">
+                        <div class="text-gray-500 mb-1">下落时间</div>
+                        <div class="font-medium" id="timeDisplay">0.00s</div>
+                    </div>
+                    <div class="bg-gray-100 rounded-lg p-2 flex-1 mx-1 text-center">
+                        <div class="text-gray-500 mb-1">当前速度</div>
+                        <div class="font-medium" id="velocityDisplay">0.00m/s</div>
+                    </div>
+                    <div class="bg-gray-100 rounded-lg p-2 flex-1 mx-1 text-center">
+                        <div class="text-gray-500 mb-1">当前位置</div>
+                        <div class="font-medium" id="positionDisplay">10.00m</div>
+                    </div>
+                </div>
+                
+                <!-- 操作按钮 -->
+                <div class="flex space-x-3">
+                    <button class="btn-primary flex-1 start-experiment-btn" data-target-sim="#experimentBall" id="startBtn">
+                        开始下落
+                    </button>
+                    <a href="experiment-data.html" class="btn-secondary flex-1 text-center flex items-center justify-center">
+                        <i class="fas fa-chart-line mr-1"></i>
+                        数据图表
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const heightSlider = document.getElementById('heightSlider');
+            const gravitySlider = document.getElementById('gravitySlider');
+            const massSlider = document.getElementById('massSlider');
+            const heightValue = document.getElementById('heightValue');
+            const gravityValue = document.getElementById('gravityValue');
+            const massValue = document.getElementById('massValue');
+            const startBtn = document.getElementById('startBtn');
+            const ball = document.getElementById('experimentBall');
+            const timeDisplay = document.getElementById('timeDisplay');
+            const velocityDisplay = document.getElementById('velocityDisplay');
+            const positionDisplay = document.getElementById('positionDisplay');
+            const pauseBtn = document.getElementById('pauseBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            
+            let animationInterval;
+            let startTime;
+            let isRunning = false;
+            
+            // 滑块值变化监听
+            heightSlider.addEventListener('input', function() {
+                heightValue.textContent = this.value;
+                updateBallPosition();
+            });
+            
+            gravitySlider.addEventListener('input', function() {
+                gravityValue.textContent = this.value;
+            });
+            
+            massSlider.addEventListener('input', function() {
+                massValue.textContent = this.value;
+                // 调整小球大小以反映质量变化
+                const size = 16 + (this.value - 0.1) * 4;
+                ball.style.width = size + 'px';
+                ball.style.height = size + 'px';
+                ball.style.marginLeft = -(size/2) + 'px';
+            });
+            
+            // 更新小球初始位置
+            function updateBallPosition() {
+                if (!isRunning) {
+                    // 根据高度设置小球位置
+                    const sceneHeight = document.querySelector('.scene-container').offsetHeight;
+                    const height = parseFloat(heightSlider.value);
+                    const maxHeight = parseFloat(heightSlider.max);
+                    const position = (1 - height/maxHeight) * (sceneHeight - 20);
+                    ball.style.top = position + 'px';
+                    positionDisplay.textContent = height.toFixed(2) + 'm';
+                }
+            }
+            
+            // 开始/重置实验
+            startBtn.addEventListener('click', function() {
+                if (!isRunning) {
+                    startExperiment();
+                } else {
+                    resetExperiment();
+                }
+            });
+            
+            // 重置按钮
+            resetBtn.addEventListener('click', resetExperiment);
+            
+            // 暂停按钮
+            pauseBtn.addEventListener('click', function() {
+                if (isRunning) {
+                    if (ball.style.animationPlayState === 'paused') {
+                        ball.style.animationPlayState = 'running';
+                        pauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    } else {
+                        ball.style.animationPlayState = 'paused';
+                        pauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                    }
+                }
+            });
+            
+            function startExperiment() {
+                isRunning = true;
+                startBtn.textContent = '重置';
+                
+                // 配置小球下落动画
+                const height = parseFloat(heightSlider.value);
+                const gravity = parseFloat(gravitySlider.value);
+                const fallTime = Math.sqrt(2 * height / gravity);
+                
+                ball.style.animation = 'none';
+                ball.offsetHeight; // 触发重绘
+                ball.style.animation = `fall ${fallTime}s cubic-bezier(0.5, 0, 1, 1) forwards`;
+                
+                // 更新数据显示
+                startTime = Date.now();
+                clearInterval(animationInterval);
+                animationInterval = setInterval(updateDataDisplay, 50);
+            }
+            
+            function resetExperiment() {
+                isRunning = false;
+                startBtn.textContent = '开始下落';
+                
+                // 重置小球动画
+                ball.style.animation = 'none';
+                
+                clearInterval(animationInterval);
+                
+                // 重置数据显示
+                timeDisplay.textContent = '0.00s';
+                velocityDisplay.textContent = '0.00m/s';
+                
+                // 重置小球位置
+                updateBallPosition();
+                
+                // 确保暂停按钮状态正确
+                pauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            }
+            
+            function updateDataDisplay() {
+                if (!isRunning) return;
+                
+                const currentTime = (Date.now() - startTime) / 1000;
+                const height = parseFloat(heightSlider.value);
+                const gravity = parseFloat(gravitySlider.value);
+                
+                // 更新时间显示
+                timeDisplay.textContent = currentTime.toFixed(2) + 's';
+                
+                // 计算当前速度: v = g*t
+                const velocity = gravity * currentTime;
+                velocityDisplay.textContent = velocity.toFixed(2) + 'm/s';
+                
+                // 计算当前位置: s = h - 1/2*g*t^2
+                const position = height - 0.5 * gravity * currentTime * currentTime;
+                if (position > 0) {
+                    positionDisplay.textContent = position.toFixed(2) + 'm';
+                } else {
+                    positionDisplay.textContent = '0.00m';
+                    clearInterval(animationInterval);
+                }
+            }
+            
+            // 初始化小球位置
+            updateBallPosition();
+        });
+    </script>
+</body>
+</html> 

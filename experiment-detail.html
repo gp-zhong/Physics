@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实验详情 - 自由落体</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Noto Sans SC (思源黑体) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+    
+    <!-- iPhone 15 Pro 框架 -->
+    <div class="phone-frame">
+        <!-- 刘海屏 -->
+        <div class="notch"></div>
+        
+        <!-- 屏幕内容 -->
+        <div class="screen-content">
+            <!-- 顶部导航 -->
+            <div class="header">
+                <a href="home.html" class="text-gray-700">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h1 class="text-lg font-medium flex-1 text-center">自由落体实验</h1>
+                <button class="text-gray-700">
+                    <i class="far fa-heart"></i>
+                </button>
+            </div>
+            
+            <!-- 主要内容区域 - 可滚动 -->
+            <div class="overflow-y-auto flex-1 pb-16">
+                <!-- 实验预览图 -->
+                <div class="w-full h-56 relative">
+                    <img src="https://images.unsplash.com/photo-1454789548928-9efd52dc4031?q=80&w=800" alt="自由落体实验" class="w-full h-full object-cover">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 flex items-center">
+                        <div class="bg-blue-500 text-white text-xs px-2 py-1 rounded mr-2">
+                            力学
+                        </div>
+                        <div class="flex items-center text-white text-sm">
+                            <i class="fas fa-star text-yellow-400 mr-1"></i>
+                            <span>4.9</span>
+                            <span class="mx-1">|</span>
+                            <span>2.5k 人学习</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 实验介绍 -->
+                <div class="p-4">
+                    <h2 class="text-lg font-medium mb-2">实验介绍</h2>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                        探究重力加速度对物体下落的影响。通过改变高度、物体质量等参数，观察物体在只受重力作用下运动的规律，验证牛顿第二定律和自由落体定律。
+                    </p>
+                    
+                    <!-- 相关知识点 -->
+                    <h2 class="text-lg font-medium mb-2">相关知识点</h2>
+                    <div class="flex flex-wrap mb-4">
+                        <div class="tag bg-blue-100 text-blue-700" onclick="showKnowledgePopup('gravity')">牛顿第二定律</div>
+                        <div class="tag bg-blue-100 text-blue-700" onclick="showKnowledgePopup('gravity')">重力</div>
+                        <div class="tag bg-blue-100 text-blue-700" onclick="showKnowledgePopup('acceleration')">加速度</div>
+                    </div>
+                    
+                    <!-- 难度和时长 -->
+                    <div class="flex justify-between items-center mb-6 text-sm">
+                        <div>
+                            <span class="text-gray-500">难度:</span>
+                            <span class="ml-1">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="far fa-star text-yellow-400"></i>
+                                <i class="far fa-star text-yellow-400"></i>
+                                <i class="far fa-star text-yellow-400"></i>
+                            </span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500">时长:</span>
+                            <span class="ml-1">约10分钟</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 学习目标 -->
+                    <div class="card p-4 mb-4">
+                        <h3 class="font-medium mb-2 flex items-center">
+                            <i class="fas fa-bullseye text-blue-500 mr-2"></i>
+                            学习目标
+                        </h3>
+                        <ul class="text-sm text-gray-600 list-disc list-inside space-y-1">
+                            <li>理解重力加速度概念</li>
+                            <li>掌握自由落体运动的数学描述</li>
+                            <li>学会分析实验数据并绘制图表</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 实验步骤预览 -->
+                    <div class="card p-4 mb-6">
+                        <h3 class="font-medium mb-2 flex items-center">
+                            <i class="fas fa-list-ol text-blue-500 mr-2"></i>
+                            实验步骤
+                        </h3>
+                        <div class="space-y-2 text-sm text-gray-600">
+                            <div class="flex items-center">
+                                <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-500 flex items-center justify-center mr-2">1</div>
+                                <div>设置初始高度和重力加速度参数</div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-500 flex items-center justify-center mr-2">2</div>
+                                <div>启动实验，观察小球下落过程</div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-500 flex items-center justify-center mr-2">3</div>
+                                <div>记录和分析实验数据</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 操作按钮 -->
+                    <a href="experiment-simulation.html" class="btn-primary w-full block text-center mb-3">
+                        开始实验
+                    </a>
+                    
+                    <div class="flex space-x-3">
+                        <button class="btn-secondary flex-1 flex items-center justify-center">
+                            <i class="fas fa-play-circle mr-1"></i>
+                            教学视频
+                        </button>
+                        <button class="btn-secondary flex-1 flex items-center justify-center">
+                            <i class="fas fa-file-alt mr-1"></i>
+                            实验报告
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 知识点详解弹窗 (默认隐藏) -->
+        <div id="knowledgePopup" class="hidden absolute inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-xl w-5/6 max-h-5/6 overflow-y-auto">
+                <div class="p-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-medium" id="popupTitle">重力加速度</h3>
+                        <button onclick="hideKnowledgePopup()" class="text-gray-500">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="bg-blue-50 rounded-xl p-4 mb-4">
+                        <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=300" alt="重力加速度示意图" class="w-full h-32 object-cover rounded-lg mb-3">
+                        
+                        <div class="text-blue-800 font-medium text-center">
+                            a = g ≈ 9.8 m/s²
+                        </div>
+                    </div>
+                    
+                    <div class="text-gray-600 text-sm leading-relaxed mb-4">
+                        重力加速度是指在仅有重力作用下物体受到的加速度。在地球表面附近其值约为9.8m/s²。
+                        
+                        <p class="mt-2">重力加速度与物体质量无关，这就是为什么不同质量的物体在真空中同时落地。</p>
+                    </div>
+                    
+                    <div class="flex space-x-3">
+                        <button class="btn-secondary flex-1 text-sm" onclick="hideKnowledgePopup()">
+                            返回实验
+                        </button>
+                        <button class="btn-primary flex-1 text-sm">
+                            了解更多
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 知识点弹窗控制
+        function showKnowledgePopup(type) {
+            document.getElementById('knowledgePopup').classList.remove('hidden');
+            // 根据类型显示不同内容
+            if (type === 'acceleration') {
+                document.getElementById('popupTitle').textContent = '加速度';
+            } else {
+                document.getElementById('popupTitle').textContent = '重力加速度';
+            }
+        }
+        
+        function hideKnowledgePopup() {
+            document.getElementById('knowledgePopup').classList.add('hidden');
+        }
+    </script>
+    
+    <script src="js/main.js"></script>
+</body>
+</html> 

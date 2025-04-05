@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>物理 AI 助手</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Noto Sans SC (思源黑体) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* 打字动画 */
+        .typing-indicator {
+            display: inline-flex;
+            align-items: center;
+        }
+        .typing-indicator span {
+            height: 6px;
+            width: 6px;
+            background: #999;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 1px;
+            animation: bounce 1.3s linear infinite;
+        }
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes bounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-4px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+    
+    <!-- iPhone 15 Pro 框架 -->
+    <div class="phone-frame">
+        <!-- 刘海屏 -->
+        <div class="notch"></div>
+        
+        <!-- 屏幕内容 -->
+        <div class="screen-content">
+            <!-- 顶部导航 -->
+            <div class="header">
+                <a href="home.html" class="text-gray-700">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h1 class="text-lg font-medium flex-1 text-center">物理 AI 助手</h1>
+                <button class="text-gray-700">
+                    <i class="fas fa-ellipsis-v"></i>
+                </button>
+            </div>
+            
+            <!-- 聊天内容区域 - 可滚动 -->
+            <div class="overflow-y-auto flex-1 p-4" id="chatContainer">
+                <!-- AI 欢迎消息 -->
+                <div class="flex mb-4">
+                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-2 flex-shrink-0">
+                        <i class="fas fa-robot text-blue-500"></i>
+                    </div>
+                    <div class="chat-bubble ai">
+                        你好！我是物理 AI 助手。我可以帮助你解答物理问题，解释物理概念，或者讨论与物理实验相关的任何内容。请问有什么可以帮助你的？
+                    </div>
+                </div>
+                
+                <!-- 用户问题 -->
+                <div class="flex justify-end mb-4">
+                    <div class="chat-bubble user">
+                        为什么小球下落速度会变快？
+                    </div>
+                </div>
+                
+                <!-- AI 回答 -->
+                <div class="flex mb-4">
+                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-2 flex-shrink-0">
+                        <i class="fas fa-robot text-blue-500"></i>
+                    </div>
+                    <div class="chat-bubble ai">
+                        <p>小球下落速度变快是因为重力作用产生了加速度。</p>
+                        <p class="mt-2">根据牛顿第二定律，力等于质量乘以加速度（F = ma）。当物体只受重力作用时，物体受到的力为重力（F = mg，其中g是重力加速度，约为9.8m/s²）。</p>
+                        <p class="mt-2">这个重力使物体产生加速度 a = g，意味着每秒速度增加9.8米/秒。随着时间推移，速度不断增加，所以小球下落越来越快。</p>
+                    </div>
+                </div>
+                
+                <!-- 用户问题 -->
+                <div class="flex justify-end mb-4">
+                    <div class="chat-bubble user">
+                        那为什么不同质量的球同时落地？
+                    </div>
+                </div>
+                
+                <!-- AI 回答 -->
+                <div class="flex mb-4">
+                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-2 flex-shrink-0">
+                        <i class="fas fa-robot text-blue-500"></i>
+                    </div>
+                    <div class="chat-bubble ai">
+                        <p>这是伽利略发现的重要现象！在没有空气阻力的情况下（如真空中），不同质量的物体确实会同时落地。</p>
+                        <p class="mt-2">虽然质量大的物体受到的重力更大（F = mg），但根据牛顿第二定律（F = ma），质量大的物体也需要更大的力才能获得相同的加速度。</p>
+                        <p class="mt-2">当我们代入公式：a = F/m = (m·g)/m = g</p>
+                        <p class="mt-2">可以看到，加速度只等于重力加速度g，与物体质量m无关。因此，在只受重力作用的情况下，所有物体都以相同的加速度下落，最终会同时落地。</p>
+                        <p class="mt-2">在现实中，空气阻力会影响这个结果，使轻而蓬松的物体（如羽毛）下落更慢。</p>
+                    </div>
+                </div>
+                
+                <!-- 用户正在输入指示器 (根据需要显示/隐藏) -->
+                <div class="flex mb-4 hidden" id="typingIndicator">
+                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-2 flex-shrink-0">
+                        <i class="fas fa-robot text-blue-500"></i>
+                    </div>
+                    <div class="chat-bubble ai py-3 px-4">
+                        <div class="typing-indicator">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 推荐问题 -->
+            <div class="bg-gray-50 p-3 border-t border-gray-200">
+                <div class="text-xs text-gray-500 mb-2">推荐问题:</div>
+                <div class="flex flex-wrap gap-2">
+                    <button class="tag bg-white border border-gray-200 text-gray-700" onclick="askQuestion('能量守恒是什么？')">能量守恒是什么？</button>
+                    <button class="tag bg-white border border-gray-200 text-gray-700" onclick="askQuestion('如何计算动能？')">如何计算动能？</button>
+                    <button class="tag bg-white border border-gray-200 text-gray-700" onclick="askQuestion('惯性是什么？')">惯性是什么？</button>
+                </div>
+            </div>
+            
+            <!-- 聊天输入框 -->
+            <div class="p-3 bg-white border-t border-gray-200 flex items-center">
+                <input type="text" id="messageInput" class="flex-1 border border-gray-300 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-blue-500" placeholder="输入问题...">
+                <button id="sendButton" class="ml-2 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const messageInput = document.getElementById('messageInput');
+            const sendButton = document.getElementById('sendButton');
+            const chatContainer = document.getElementById('chatContainer');
+            const typingIndicator = document.getElementById('typingIndicator');
+            
+            // 预设的回答
+            const responses = {
+                '能量守恒是什么？': `能量守恒定律是物理学中最基本的守恒定律之一。它指出在一个封闭系统中，能量的总量保持不变，能量不会凭空产生或消失，只能从一种形式转化为另一种形式。
+
+例如，当小球从高处下落时，开始时它具有重力势能。随着下落，重力势能逐渐转化为动能，但总能量(势能+动能)保持不变。
+
+这个原理广泛应用于各种物理现象，从日常机械运动到原子物理学和宇宙学。`,
+                
+                '如何计算动能？': `动能是物体由于运动而具有的能量，它的计算公式为：
+
+Ek = ½mv²
+
+其中：
+- Ek 是动能，单位是焦耳(J)
+- m 是物体质量，单位是千克(kg)
+- v 是物体速度，单位是米/秒(m/s)
+
+例如，一个质量为2kg、速度为5m/s的物体，其动能为：
+Ek = ½ × 2 × 5² = ½ × 2 × 25 = 25J`,
+                
+                '惯性是什么？': `惯性是物体抵抗其运动状态改变的倾向。这是牛顿第一定律（惯性定律）的核心概念，该定律指出：
+
+"一个物体在没有外力作用的情况下，会保持静止状态或匀速直线运动状态。"
+
+物体的惯性大小与其质量成正比：质量越大，惯性越大，改变其运动状态所需的力也越大。
+
+实际生活中的例子：
+- 汽车突然刹车时，乘客会向前倾
+- 快速转弯时，感到身体被甩向外侧
+- 桌子上的物体不会自己开始移动或停止
+
+惯性是理解许多物理现象的基础概念。`
+            };
+            
+            // 发送消息函数
+            function sendMessage() {
+                const message = messageInput.value.trim();
+                if (message === '') return;
+                
+                // 添加用户消息
+                addUserMessage(message);
+                
+                // 清空输入框
+                messageInput.value = '';
+                
+                // 显示正在输入指示器
+                typingIndicator.classList.remove('hidden');
+                
+                // 滚动到底部
+                scrollToBottom();
+                
+                // 模拟AI思考时间，然后回复
+                setTimeout(() => {
+                    // 隐藏输入指示器
+                    typingIndicator.classList.add('hidden');
+                    
+                    // 添加AI回复
+                    addAIMessage(getResponse(message));
+                    
+                    // 滚动到底部
+                    scrollToBottom();
+                }, 1000 + Math.random() * 1000);
+            }
+            
+            // 添加用户消息到聊天界面
+            function addUserMessage(message) {
+                const messageElement = document.createElement('div');
+                messageElement.className = 'flex justify-end mb-4';
+                messageElement.innerHTML = `
+                    <div class="chat-bubble user">
+                        ${message}
+                    </div>
+                `;
+                chatContainer.appendChild(messageElement);
+            }
+            
+            // 添加AI消息到聊天界面
+            function addAIMessage(message) {
+                const messageElement = document.createElement('div');
+                messageElement.className = 'flex mb-4';
+                messageElement.innerHTML = `
+                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-2 flex-shrink-0">
+                        <i class="fas fa-robot text-blue-500"></i>
+                    </div>
+                    <div class="chat-bubble ai">
+                        ${message.replace(/\n/g, '<br>')}
+                    </div>
+                `;
+                chatContainer.appendChild(messageElement);
+            }
+            
+            // 获取回复
+            function getResponse(message) {
+                const normalizedMessage = message.trim().replace(/[？?.,。，！!]/g, '');
+                
+                // 检查是否有预设回答
+                for (const [question, answer] of Object.entries(responses)) {
+                    const normalizedQuestion = question.replace(/[？?.,。，！!]/g, '');
+                    if (normalizedMessage.includes(normalizedQuestion) || 
+                        normalizedQuestion.includes(normalizedMessage)) {
+                        return answer;
+                    }
+                }
+                
+                // 默认回答
+                return `感谢你的问题！这是一个关于"${message}"的有趣问题。在实际应用中，我会提供更具体的物理学解释，但在这个演示中，我只能提供有限的预设回答。请尝试问我关于能量守恒、动能计算或惯性的问题。`;
+            }
+            
+            // 滚动到底部
+            function scrollToBottom() {
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+            
+            // 点击发送按钮发送消息
+            sendButton.addEventListener('click', sendMessage);
+            
+            // 按回车键发送消息
+            messageInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            // 公开问题函数
+            window.askQuestion = function(question) {
+                messageInput.value = question;
+                sendMessage();
+            };
+            
+            // 初始滚动到底部
+            scrollToBottom();
+        });
+    </script>
+</body>
+</html> 

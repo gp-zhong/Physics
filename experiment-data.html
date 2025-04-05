@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实验数据分析 - 自由落体</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Noto Sans SC (思源黑体) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+    
+    <!-- iPhone 15 Pro 框架 -->
+    <div class="phone-frame">
+        <!-- 刘海屏 -->
+        <div class="notch"></div>
+        
+        <!-- 屏幕内容 -->
+        <div class="screen-content">
+            <!-- 顶部导航 -->
+            <div class="header bg-white">
+                <a href="experiment-simulation.html" class="text-gray-700">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h1 class="text-lg font-medium flex-1 text-center">实验数据分析</h1>
+                <button class="text-gray-700">
+                    <i class="fas fa-share-alt"></i>
+                </button>
+            </div>
+            
+            <!-- 主要内容区域 - 可滚动 -->
+            <div class="overflow-y-auto flex-1 pb-16 bg-gray-50">
+                <!-- 实验参数摘要 -->
+                <div class="bg-white p-4 mb-4 shadow-sm">
+                    <h2 class="text-base font-medium mb-2">实验参数</h2>
+                    <div class="flex text-sm">
+                        <div class="flex-1 flex items-center">
+                            <i class="fas fa-arrows-alt-v text-blue-500 mr-2"></i>
+                            <span>高度: 10.0 m</span>
+                        </div>
+                        <div class="flex-1 flex items-center">
+                            <i class="fas fa-weight-hanging text-blue-500 mr-2"></i>
+                            <span>质量: 1.0 kg</span>
+                        </div>
+                    </div>
+                    <div class="text-sm mt-1 flex items-center">
+                        <i class="fas fa-tachometer-alt text-blue-500 mr-2"></i>
+                        <span>重力加速度: 9.8 m/s²</span>
+                    </div>
+                </div>
+                
+                <!-- 图表选择标签 -->
+                <div class="bg-white px-4 py-3 mb-2 flex shadow-sm">
+                    <button class="flex-1 font-medium text-blue-500 border-b-2 border-blue-500 pb-1">图表分析</button>
+                    <button class="flex-1 text-gray-500">数据表格</button>
+                </div>
+                
+                <!-- 速度-时间图表 -->
+                <div class="bg-white p-4 mb-4 shadow-sm">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="font-medium">速度-时间图</h3>
+                        <div class="flex text-sm">
+                            <button class="text-blue-500 mr-3">
+                                <i class="fas fa-expand-arrows-alt"></i>
+                            </button>
+                            <button class="text-gray-500">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-container border border-gray-200 rounded-lg">
+                        <canvas id="velocityChart"></canvas>
+                    </div>
+                    <div class="mt-2 text-xs text-gray-500">
+                        关系分析: 速度与时间呈线性关系，斜率为重力加速度 g
+                    </div>
+                </div>
+                
+                <!-- 位移-时间图表 -->
+                <div class="bg-white p-4 mb-4 shadow-sm">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="font-medium">位移-时间图</h3>
+                        <div class="flex text-sm">
+                            <button class="text-blue-500 mr-3">
+                                <i class="fas fa-expand-arrows-alt"></i>
+                            </button>
+                            <button class="text-gray-500">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-container border border-gray-200 rounded-lg">
+                        <canvas id="positionChart"></canvas>
+                    </div>
+                    <div class="mt-2 text-xs text-gray-500">
+                        关系分析: 位移与时间呈二次函数关系，符合自由落体运动规律
+                    </div>
+                </div>
+                
+                <!-- 数据表格 -->
+                <div class="bg-white p-4 mb-4 shadow-sm">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="font-medium">实验数据</h3>
+                        <button class="text-sm text-blue-500 flex items-center">
+                            <i class="fas fa-eye mr-1"></i>
+                            查看全部
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-gray-200">
+                                    <th class="py-2 px-3 text-left font-medium text-gray-600">时间(s)</th>
+                                    <th class="py-2 px-3 text-left font-medium text-gray-600">位置(m)</th>
+                                    <th class="py-2 px-3 text-left font-medium text-gray-600">速度(m/s)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dataTable">
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-2 px-3">0.0</td>
+                                    <td class="py-2 px-3">10.0</td>
+                                    <td class="py-2 px-3">0.0</td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-2 px-3">0.1</td>
+                                    <td class="py-2 px-3">9.95</td>
+                                    <td class="py-2 px-3">0.98</td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-2 px-3">0.2</td>
+                                    <td class="py-2 px-3">9.80</td>
+                                    <td class="py-2 px-3">1.96</td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-2 px-3">0.3</td>
+                                    <td class="py-2 px-3">9.56</td>
+                                    <td class="py-2 px-3">2.94</td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-2 px-3">0.4</td>
+                                    <td class="py-2 px-3">9.22</td>
+                                    <td class="py-2 px-3">3.92</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- 结论分析 -->
+                <div class="bg-white p-4 mb-4 shadow-sm">
+                    <h3 class="font-medium mb-2">实验结论</h3>
+                    <div class="text-sm text-gray-600 bg-blue-50 p-3 rounded-lg">
+                        <p class="mb-2">通过此次实验验证了自由落体运动规律:</p>
+                        <ol class="list-decimal list-inside space-y-1">
+                            <li>速度随时间线性增加，v = g·t</li>
+                            <li>位移随时间呈二次函数关系，h = h₀ - ½g·t²</li>
+                            <li>物体质量不影响下落速度</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <!-- 操作按钮 -->
+                <div class="p-4 flex space-x-3">
+                    <button class="btn-secondary flex-1 flex items-center justify-center">
+                        <i class="fas fa-download mr-1"></i>
+                        导出数据
+                    </button>
+                    <button class="btn-primary flex-1 flex items-center justify-center">
+                        <i class="fas fa-file-alt mr-1"></i>
+                        生成报告
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 生成实验数据
+            const experimentData = generateSimulationData();
+            
+            // 绘制速度-时间图表
+            const velocityCtx = document.getElementById('velocityChart').getContext('2d');
+            const velocityChart = new Chart(velocityCtx, {
+                type: 'line',
+                data: {
+                    labels: experimentData.map(data => data.time),
+                    datasets: [{
+                        label: '速度 (m/s)',
+                        data: experimentData.map(data => data.velocity),
+                        borderColor: '#4A90E2',
+                        backgroundColor: 'rgba(74, 144, 226, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.1,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '速度 (m/s)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: '时间 (s)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // 绘制位移-时间图表
+            const positionCtx = document.getElementById('positionChart').getContext('2d');
+            const positionChart = new Chart(positionCtx, {
+                type: 'line',
+                data: {
+                    labels: experimentData.map(data => data.time),
+                    datasets: [{
+                        label: '位置 (m)',
+                        data: experimentData.map(data => data.position),
+                        borderColor: '#7ED321',
+                        backgroundColor: 'rgba(126, 211, 33, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.1,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            reverse: true,
+                            min: 0,
+                            max: 10,
+                            title: {
+                                display: true,
+                                text: '位置 (m)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: '时间 (s)'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+        
+        // 模拟数据生成函数
+        function generateSimulationData() {
+            const data = [];
+            const initialHeight = 10;
+            const gravity = 9.8;
+            
+            // 计算落地时间
+            const fallTime = Math.sqrt(2 * initialHeight / gravity);
+            
+            // 生成数据点
+            for (let t = 0; t <= fallTime; t += 0.1) {
+                // s = 初始高度 - 1/2 * g * t^2
+                const position = initialHeight - 0.5 * gravity * t * t;
+                
+                if (position >= 0) {
+                    data.push({
+                        time: t.toFixed(1),
+                        position: position.toFixed(2),
+                        velocity: (gravity * t).toFixed(2)
+                    });
+                } else {
+                    // 确保最后一个点是地面
+                    data.push({
+                        time: fallTime.toFixed(1),
+                        position: '0.00',
+                        velocity: (gravity * fallTime).toFixed(2)
+                    });
+                    break;
+                }
+            }
+            
+            return data;
+        }
+    </script>
+</body>
+</html> 
